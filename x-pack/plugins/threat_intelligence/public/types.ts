@@ -129,6 +129,7 @@ export interface SecuritySolutionPluginContext {
   blockList: {
     exceptionListApiClient: unknown;
     getFlyoutComponent: () => NamedExoticComponent<unknown>;
+    getFormComponent: () => NamedExoticComponent<unknown>;
     getFormEffectedPolicy: () => NamedExoticComponent<unknown>;
   };
 }

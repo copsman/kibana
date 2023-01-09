@@ -9,12 +9,9 @@ import React, { VFC } from 'react';
 import {
   EntriesArray,
   ExceptionListItemSchema,
-  ExceptionListItemType,
-  ListId,
   ListOperator,
 } from '@kbn/securitysolution-io-ts-list-types';
 import { NonEmptyOrNullableStringArray } from '@kbn/securitysolution-io-ts-types';
-import { BlockListForm } from '../form';
 import { useSecurityContext } from '../../../../hooks/use_security_context';
 
 export interface BlockListFlyoutProps {
@@ -31,6 +28,7 @@ export const BlockListFlyout: VFC<BlockListFlyoutProps> = ({ indicatorFileHash }
   const { blockList } = useSecurityContext();
   const Component = blockList.getFlyoutComponent();
   const exceptionListApiClient = blockList.exceptionListApiClient;
+  const FormComponent = blockList.getFormComponent();
 
   const field: string = 'file.hash.*';
   const operator: ListOperator = 'included';
@@ -45,13 +43,18 @@ export const BlockListFlyout: VFC<BlockListFlyoutProps> = ({ indicatorFileHash }
     },
   ];
 
-  // const listId: ListId = 'endpoint_threat_intelligence';
-  const listId: ListId = 'endpoint_blocklists';
-  const itemType: ExceptionListItemType = 'simple';
   const item: ExceptionListItemSchema = {
-    list_id: listId,
+    comments: [],
+    description: '',
     entries,
-    type: itemType,
+    item_id: undefined,
+    list_id: 'endpoint_blocklists',
+    meta: { temporaryUuid: '' },
+    name: '',
+    namespace_type: 'agnostic',
+    os_types: ['windows'],
+    tags: ['policy:all'],
+    type: 'simple',
   };
 
   const props = {
@@ -59,15 +62,9 @@ export const BlockListFlyout: VFC<BlockListFlyoutProps> = ({ indicatorFileHash }
     item,
     policies: [],
     policiesIsLoading: false,
-    FormComponent: BlockListForm,
-    onSuccess: () => {
-      console.log('success');
-    },
-    onClose: () => {
-      console.log('close');
-    },
+    FormComponent,
     labels: {},
-    'data-test-subj': 'test',
+    'data-test-subj': 'threat_intelligence',
     size: 'm',
   };
 

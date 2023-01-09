@@ -241,30 +241,8 @@ export class ExceptionsListApiClient {
       transformedException = this.writeTransform(exception);
     }
 
-    debugger;
-
-    const exc = {
-      comments: [],
-      description: 'test',
-      entries: [
-        {
-          field: 'file.hash.sha256',
-          value: ['041c972e986f8c4409935a2e1f6780aa5f6ac834c65aab0a6cc0c0f3c05ce249'],
-          type: 'match_any',
-          operator: 'included',
-        },
-      ],
-      list_id: 'endpoint_blocklists',
-      name: 'manage',
-      namespace_type: 'agnostic',
-      tags: ['policy:all'],
-      type: 'simple',
-      os_types: ['windows'],
-    };
-
     return this.http.post<ExceptionListItemSchema>(EXCEPTION_LIST_ITEM_URL, {
-      // body: JSON.stringify(transformedException),
-      body: JSON.stringify(exc),
+      body: JSON.stringify(transformedException),
     });
   }
 
